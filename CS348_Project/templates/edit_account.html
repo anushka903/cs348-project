@@ -1,0 +1,37 @@
+{% extends "register_customer.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Edit Account Information</h1>
+
+    <form method="POST" action="{{ url_for('edit_account') }}">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="{{ user.name }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ user.email }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" value="{{ user.phone }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="new_password">New Password (leave blank to keep current):</label>
+            <input type="password" id="new_password" name="new_password">
+        </div>
+
+        <div class="form-group">
+            <label for="current_password">Current Password (required to make changes):</label>
+            <input type="password" id="current_password" name="current_password" required>
+        </div>
+
+        <button type="submit" class="button">Update Account</button>
+        <a href="{{ url_for('profile') }}" class="button secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

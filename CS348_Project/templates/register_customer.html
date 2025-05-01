@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Customer</title>
+    <style>
+        /* Add to your existing styles */
+        nav a, .dropbtn {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            transition: background 0.3s ease;
+        }
+
+        nav a:hover, .dropdown:hover .dropbtn {
+            background: #4e342e;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            padding: 10px 15px;
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #4e342e;
+            color: white;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background: #4e342e;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d1c4b1; /* Tan background color */
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #3e2723; /* Dark brown for heading */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #3e2723; /* Dark brown for labels */
+        }
+
+        .form-group input {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #3e2723; /* Dark brown button */
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            background-color: #4e342e; /* Slightly lighter brown on hover */
+        }
+
+        .customer-details {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .customer-details h3 {
+            color: #3e2723; /* Dark brown for subheadings */
+        }
+
+        .customer-details p {
+            color: #5d4037; /* Dark brown for text */
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 18px;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: #3e2723; /* Dark brown for button */
+            border-radius: 5px;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            transition: background 0.3s ease;
+        }
+
+        a:hover {
+            background: #4e342e; /* Slightly lighter brown on hover */
+        }
+        nav {
+            background-color: #3e2723; /* Dark background for nav */
+            padding: 10px 0;
+            text-align: center;
+            display: flex; /* Use Flexbox for horizontal alignment */
+            justify-content: center; /* Center the links horizontally */
+            align-items: center; /* Center the links vertically */
+        }
+
+        nav a {
+            color: white;
+            margin: 0 20px; /* Add spacing between links */
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block; /* Make links inline-block */
+            padding: 10px 15px; /* Add padding for better clickability */
+            transition: background 0.3s ease; /* Smooth hover effect */
+        }
+
+        nav a:hover {
+            background: #4e342e; /* Slightly lighter brown on hover */
+        }
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensure it's on top of other elements */
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px; /* Adjust width as needed */
+        }
+
+        .modal-content h3 {
+            color: #3e2723; /* Dark brown for heading */
+        }
+
+        .modal-content p {
+            color: #5d4037; /* Dark brown for text */
+        }
+
+        .modal-content button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #3e2723; /* Dark brown button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal-content button:hover {
+            background-color: #4e342e; /* Slightly lighter brown on hover */
+        }
+
+        /* Customer list table styles */
+        .customer-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .customer-table th, .customer-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .customer-table th {
+            background-color: #3e2723;
+            color: white;
+        }
+
+        .customer-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Toggle button for customer list */
+        .toggle-button {
+            background: #3e2723;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px 0;
+        }
+
+        .toggle-button:hover {
+            background: #4e342e;
+        }
+
+        /* Section styling */
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        /* Password requirements */
+        .password-requirements {
+            text-align: left;
+            max-width: 300px;
+            margin: 0 auto 20px;
+            color: #5d4037;
+            font-size: 14px;
+        }
+
+        /* Error message */
+        .error-message {
+            color: #d32f2f;
+            margin: 10px 0;
+        }
+
+        /* Login prompt */
+        .login-prompt {
+            margin-top: 20px;
+            color: #5d4037;
+        }
+
+        .login-prompt a {
+            display: inline;
+            background: none;
+            color: #3e2723;
+            padding: 0;
+            margin: 0;
+            text-decoration: underline;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('menu') }}">Menu</a>
+        <a href="{{ url_for('order') }}">Order</a>
+        <a href="{{ url_for('generate_report') }}">Generate Report</a>
+
+        <div class="dropdown">
+        <a href="#" class="dropbtn">Customer</a>
+            <div class="dropdown-content">
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('profile') }}">View Profile</a>
+                    <a href="{{ url_for('order') }}">Place Order</a>
+                    <a href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">Login</a>
+                    <a href="{{ url_for('register_customer') }}">Register</a>
+                {% endif %}
+            </div>
+        </div>
+        {# Only show standalone login button when NOT logged in #}
+        {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('login') }}" class="login-btn">Login</a>
+        {% endif %}
+    </nav>
+    <div class="container">
+        <h1>Register Customer</h1>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="error-message">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Registration Form -->
+        <form method="POST" action="/register_customer">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+
+            <div class="password-requirements">
+                <p>Password requirements:</p>
+                <ul>
+                    <li>At least 8 characters</li>
+                    <li>Contains a number</li>
+                    <li>Contains a special character</li>
+                </ul>
+            </div>
+
+            <button class="button" type="submit">Register</button>
+        </form>
+
+        <div class="login-prompt">
+            Already have an account? <a href="{{ url_for('login') }}">Login here</a>
+        </div>
+
+        <!-- Display Customer Details After Registration -->
+        {% if customer %}
+        <!-- Modal for Registration Confirmation -->
+        <div id="registrationModal" class="modal">
+            <div class="modal-content">
+                <h3>Registration Successful!</h3>
+                <p><strong>Customer ID:</strong> <span id="modalCustomerId"></span></p>
+                <p><strong>Name:</strong> <span id="modalName"></span></p>
+                <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+                <p><strong>Phone:</strong> <span id="modalPhone"></span></p>
+                <button onclick="closeModal()">Close</button>
+                <p>You can now <a href="{{ url_for('login') }}" style="color: #3e2723; text-decoration: underline;">login</a> to your account.</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Delete Customer Section
+        <div class="section">
+            <h1>Delete Customer</h1>
+            <form id="deleteCustomerForm">
+                <div class="form-group">
+                    <label for="delete_customer_id">Customer ID:</label>
+                    <input type="number" id="delete_customer_id" name="delete_customer_id" required>
+                </div>
+                <button class="button" type="button" onclick="deleteCustomer()">Delete Customer</button>
+            </form>
+            <p id="deleteMessage" style="color: red; margin-top: 10px;"></p>
+        </div> -->
+
+        <!-- Customer List Section -->
+        <div class="section">
+            <button class="toggle-button" onclick="toggleCustomerList()">Show/Hide All Customers</button>
+            <div id="customerList" style="display: none;">
+                <h2>All Customers</h2>
+                <table class="customer-table">
+                    <thead>
+                        <tr>
+                            <th>Customer ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for customer in all_customers %}
+                        <tr>
+                            <td>{{ customer.customer_id }}</td>
+                            <td>{{ customer.name }}</td>
+                            <td>{{ customer.email }}</td>
+                            <td>{{ customer.phone }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4">No customers found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to display the modal with customer details
+        function showModal(customer) {
+            document.getElementById('modalCustomerId').textContent = customer.customer_id;
+            document.getElementById('modalName').textContent = customer.name;
+            document.getElementById('modalEmail').textContent = customer.email;
+            document.getElementById('modalPhone').textContent = customer.phone;
+            document.getElementById('registrationModal').style.display = 'flex'; // Show the modal
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            document.getElementById('registrationModal').style.display = 'none'; // Hide the modal
+        }
+
+        // Check if there's a customer object passed from the backend
+        {% if customer %}
+            showModal({
+                customer_id: {{ customer.customer_id }},
+                name: "{{ customer.name }}",
+                email: "{{ customer.email }}",
+                phone: "{{ customer.phone }}"
+            });
+        {% endif %}
+
+        // JavaScript function to handle customer deletion
+        function deleteCustomer() {
+            const customerId = document.getElementById('delete_customer_id').value;
+            if (!customerId) {
+                alert("Please enter a Customer ID.");
+                return;
+            }
+
+            fetch(`/delete_customer/${customerId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                const deleteMessage = document.getElementById('deleteMessage');
+                if (data.success) {
+                    deleteMessage.textContent = data.message;
+                    deleteMessage.style.color = 'green';
+                } else {
+                    deleteMessage.textContent = data.message;
+                    deleteMessage.style.color = 'red';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('deleteMessage').textContent = 'An error occurred while deleting the customer.';
+            });
+        }
+        // Simple toggle
+        function toggleCustomerList() {
+            const customerList = document.getElementById('customerList');
+            customerList.style.display = customerList.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Password validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                e.preventDefault();
+                return;
+            }
+
+            // Basic password strength validation
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters long!');
+                e.preventDefault();
+                return;
+            }
+
+            if (!/\d/.test(password)) {
+                alert('Password must contain at least one number!');
+                e.preventDefault();
+                return;
+            }
+
+            if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+                alert('Password must contain at least one special character!');
+                e.preventDefault();
+                return;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% extends "login.html" %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=1.0">
+{% block content %}
+<div class="container">
+    <h1>Delete Your Account</h1>
+    <div class="confirmation-warning">
+        <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+        <p>All your order history will be permanently deleted.</p>
+    </div>
+
+    <form method="POST" action="{{ url_for('delete_account') }}">
+        <div class="form-group">
+            <label for="password">Enter your password to confirm:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="button danger">Permanently Delete My Account</button>
+            <a href="{{ url_for('profile') }}" class="button">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

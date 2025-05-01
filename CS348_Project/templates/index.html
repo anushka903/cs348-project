@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Coffeeo - Enjoy Your Coffee</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=1.0">
+</head>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-image: url('/static/images/main-coffee.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('menu') }}">Menu</a>
+        <a href="{{ url_for('order') }}">Order</a>
+        <a href="{{ url_for('generate_report') }}">Generate Report</a>
+        <div class="dropdown">
+        <a href="#" class="dropbtn">Customer</a>
+            <div class="dropdown-content">
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('profile') }}">View Profile</a>
+                    <a href="{{ url_for('order') }}">Place Order</a>
+                    <a href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">Login</a>
+                    <a href="{{ url_for('register_customer') }}">Register</a>
+                {% endif %}
+            </div>
+        </div>
+        {# Only show standalone login button when NOT logged in #}
+        {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('login') }}" class="login-btn">Login</a>
+        {% endif %}
+    </nav>
+
+    <!-- Main Content -->
+    <header>
+        <div class="header-container">
+            <div class="header-text">
+                <h1>Enjoy Your Morning Coffee ☕</h1>
+                <p class="slogan">Start your day right with a cup of pure happiness.</p>
+            </div>
+        </div>
+    </header>
+</body>
+</html>

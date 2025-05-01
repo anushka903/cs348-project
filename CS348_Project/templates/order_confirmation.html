@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d1c4b1; /* Tan background color */
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #3e2723; /* Dark brown for heading */
+        }
+
+        .order-details {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .order-details h3 {
+            color: #3e2723; /* Dark brown for subheadings */
+        }
+
+        .order-details p {
+            color: #5d4037; /* Dark brown for text */
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #3e2723; /* Dark brown button */
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background-color: #4e342e; /* Slightly lighter brown on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Confirmation</h1>
+        <div class="order-details">
+            <h3>Order ID: {{ order.order_id }}</h3>
+            <h3>Total Price: ${{ order.total_price }}</h3>
+            <h3>Items:</h3>
+            <ul>
+                {% for item in items %}
+                <li>{{ item.name }} - ${{ item.price }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <a href="{{ url_for('home') }}" class="button">Return to Home</a>
+    </div>
+</body>
+</html>

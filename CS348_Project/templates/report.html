@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d1c4b1; /* Tan background color */
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #3e2723; /* Dark brown for heading */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #3e2723; /* Dark brown for labels */
+        }
+
+        .form-group input, .form-group select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #3e2723; /* Dark brown button */
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            background-color: #4e342e; /* Slightly lighter brown on hover */
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 18px;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: #3e2723; /* Dark brown for button */
+            border-radius: 5px;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            transition: background 0.3s ease;
+        }
+
+        a:hover {
+            background: #4e342e; /* Slightly lighter brown on hover */
+        }
+        nav {
+            background-color: #3e2723; /* Dark background for nav */
+            padding: 10px 0;
+            text-align: center;
+            display: flex; /* Use Flexbox for horizontal alignment */
+            justify-content: center; /* Center the links horizontally */
+            align-items: center; /* Center the links vertically */
+        }
+
+        nav a {
+            color: white;
+            margin: 0 20px; /* Add spacing between links */
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block; /* Make links inline-block */
+            padding: 10px 15px; /* Add padding for better clickability */
+            transition: background 0.3s ease; /* Smooth hover effect */
+        }
+
+        nav a:hover {
+            background: #4e342e; /* Slightly lighter brown on hover */
+        }
+        /* Add to your existing styles */
+        nav a, .dropbtn {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            transition: background 0.3s ease;
+        }
+
+        /* Add to your existing styles */
+        nav a, .dropbtn {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            transition: background 0.3s ease;
+        }
+
+        nav a:hover, .dropdown:hover .dropbtn {
+            background: #4e342e;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            padding: 10px 15px;
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #4e342e;
+            color: white;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background: #4e342e;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('menu') }}">Menu</a>
+        <a href="{{ url_for('order') }}">Order</a>
+        <a href="{{ url_for('generate_report') }}">Generate Report</a>
+        <div class="dropdown">
+        <a href="#" class="dropbtn">Customer</a>
+            <div class="dropdown-content">
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('profile') }}">View Profile</a>
+                    <a href="{{ url_for('order') }}">Place Order</a>
+                    <a href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">Login</a>
+                    <a href="{{ url_for('register_customer') }}">Register</a>
+                {% endif %}
+            </div>
+        </div>
+        {# Only show standalone login button when NOT logged in #}
+        {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('login') }}" class="login-btn">Login</a>
+        {% endif %}
+    </nav>
+    <div class="container">
+        <h1>Generate Report</h1>
+        <form method="POST" action="/generate_report">
+            <div class="form-group">
+                <label for="start_date">Start Date:</label>
+                <input type="date" id="start_date" name="start_date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="end_date">End Date:</label>
+                <input type="date" id="end_date" name="end_date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="customer_id">Customer ID:</label>
+                <input type="number" id="customer_id" name="customer_id" placeholder="Enter Customer ID">
+            </div>
+
+            <div class="form-group">
+                <label for="item_id">Menu Item:</label>
+                <select id="item_id" name="item_id">
+                    <option value="">All Items</option>
+                    {% for item in menu_items %}
+                    <option value="{{ item.item_id }}">{{ item.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button class="button" type="submit">Generate Report</button>
+        </form>
+    </div>
+</body>
+</html>
