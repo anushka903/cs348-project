@@ -19,10 +19,10 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 # Securely fetch database credentials from environment variables
-DB_USER = os.getenv('DB_USER', 'root')
-DB_PASSWORD = os.getenv('DB_PASSWORD', 'California#77')
-CLOUD_SQL_IP = os.getenv('CLOUD_SQL_IP', '34.135.140.218')
-DB_NAME = os.getenv('DB_NAME', 'coffee_cafe')
+DB_USER = os.getenv('---', '---')
+DB_PASSWORD = os.getenv('---', '---')
+CLOUD_SQL_IP = os.getenv('---', '---')
+DB_NAME = os.getenv('---', '---')
 
 # Configure the database URI
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{CLOUD_SQL_IP}/{DB_NAME}'
